@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>common-command-reference | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="常见指令参考1,k8s类别12345678910111213141516171819202122232425kubectl delete cm  &#96;kubectl get cm -n flink-k8s |grep cluster|grep -v grep|awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27;&#96; -n flink-k8s &amp;&amp;  #批量rollo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="common-command-reference">
+<meta property="og:url" content="http://example.com/2023/05/24/common-command-reference/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="常见指令参考1,k8s类别12345678910111213141516171819202122232425kubectl delete cm  &#96;kubectl get cm -n flink-k8s |grep cluster|grep -v grep|awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27;&#96; -n flink-k8s &amp;&amp;  #批量rollo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-24T10:44:40.000Z">
+<meta property="article:modified_time" content="2023-05-25T08:30:02.460Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-common-command-reference" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/24/common-command-reference/" class="article-date">
+  <time class="dt-published" datetime="2023-05-24T10:44:40.000Z" itemprop="datePublished">2023-05-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      common-command-reference
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="常见指令参考"><a href="#常见指令参考" class="headerlink" title="常见指令参考"></a>常见指令参考</h1><h2 id="1-k8s类别"><a href="#1-k8s类别" class="headerlink" title="1,k8s类别"></a>1,k8s类别</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete cm  `kubectl get cm -n flink-k8s |grep cluster|grep -v grep|awk &#x27;&#123;print $1&#125;&#x27;` -n flink-k8s &amp;&amp;  </span><br><span class="line"></span><br><span class="line">#批量rollout 指定的 sts</span><br><span class="line">kubectl rollout restart sts  flink-taskmanager flink-jobmanager  -n flink-k8s</span><br><span class="line"></span><br><span class="line">#强制删除指定pod</span><br><span class="line">kubectl delete pod  flink-taskmanager-0  --force --grace-period=0 -n flink-k8s</span><br><span class="line"></span><br><span class="line">#删除指定命名空间的数据</span><br><span class="line">kubectl  delete statefulset --all  -n insight-hr-v3 &amp;&amp; kubectl  delete deployment --all  -n insight-hr-v3 &amp;&amp; kubectl  delete service --all  -n insight-hr-v3 &amp;&amp; kubectl  delete ingress --all  -n insight-hr-v3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#通过关键字批量删除pod</span><br><span class="line">kubectl delete pod  `kubectl get pod -n demo-zhaopin-sit |grep $keyword|grep -v grep|awk &#x27;&#123;print $1&#125;&#x27;` -n demo-zhaopin-sit  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#删除pod标签</span><br><span class="line">kebectl delete pod -l app=www -n kube-system</span><br><span class="line"></span><br><span class="line">#查看pod描述</span><br><span class="line">kubectl describe pod xxx -n kube-system</span><br><span class="line"></span><br><span class="line">参考文档</span><br><span class="line">https://cloud.tencent.com/developer/article/1140076</span><br><span class="line">https://segmentfault.com/a/1190000039966780</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-docker类别"><a href="#2-docker类别" class="headerlink" title="2,docker类别"></a>2,docker类别</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#删除所有docker镜像</span><br><span class="line">docker rmi -f `docker images -aq`</span><br><span class="line"></span><br><span class="line">#打包指定的docker文件,并自定义tag</span><br><span class="line">docker build -f ./dockerfile-maven . -t harbor.demo.com/zhiren/authenticate-service:dev-20230309-8-676345</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#docker安装mysql</span><br><span class="line">docker run -p 3306:3306 --restart=always -it   --name mysql8  -v /etc/mysql:/etc/mysql -v /var/log/mysql:/var/log/mysql -v /var/lib/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.26 --lower_case_table_names=1 --secure-file-priv=/var/lib/mysql</span><br><span class="line"></span><br><span class="line">ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY &#x27;root&#x27;;</span><br><span class="line">远程：ALTER USER &#x27;root&#x27;@&#x27;%&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;root&#x27;;</span><br><span class="line"></span><br><span class="line">#安装redis，</span><br><span class="line"></span><br><span class="line">docker run --restart=always  -p 6379:6379 --name redis  -d redis redis-server --requirepass &quot;AAAaaa1234&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#安装rabbitmq</span><br><span class="line"></span><br><span class="line">docker run -d --name rabbitmq3.7.7 --restart=always -p 5672:5672 -p 15672:15672 -v /opt/mq/data:/var/lib/rabbitmq --hostname myRabbit -e RABBITMQ_DEFAULT_VHOST=my_vhost  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3.7.7-management</span><br><span class="line"></span><br><span class="line">#部署nexus</span><br><span class="line"></span><br><span class="line">mkdir -p /root/docker/nexus/data &amp;&amp; chown -R 200 /root/docker/nexus/data/ &amp;&amp;  docker run -d --name nexus3 -p 8081:8081 --restart always -v /root/docker/nexus/data:/nexus-data sonatype/nexus3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-mysql相关指令"><a href="#3-mysql相关指令" class="headerlink" title="3,mysql相关指令"></a>3,mysql相关指令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#登录mysql 客户端</span><br><span class="line">mysql -h 172.24.3.1 -P 9030 -u root -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#查看mysql版本号</span><br><span class="line">select version();</span><br><span class="line"></span><br><span class="line">#创建用户,并授予相关权限</span><br><span class="line">CREATE USER &#x27;demo_cdc_&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;demo_cdc_@AAAaaa1234&#x27;;</span><br><span class="line">GRANT SELECT, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &#x27;demo_cdc_&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;demo_cdc_@AAAaaa1234&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-kafka相关指令"><a href="#4-kafka相关指令" class="headerlink" title="4,kafka相关指令"></a>4,kafka相关指令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">#kafka启动</span><br><span class="line">sudo /opt/kafka/bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties</span><br><span class="line"></span><br><span class="line">#zookeeper启动</span><br><span class="line">sudo /opt/kafka/bin/zookeeper-server-start.sh -daemon /opt/kafka/config/zookeeper.properties </span><br><span class="line"></span><br><span class="line">#kafka关闭</span><br><span class="line">sudo /opt/kafka/bin/kafka-server-stop.sh </span><br><span class="line"></span><br><span class="line">sudo /opt/kafka/bin/zookeeper-server-stop.sh &amp;&amp; sudo /opt/kafka/bin/kafka-server-stop.sh </span><br><span class="line"></span><br><span class="line">#批量关闭指令,并清除kafka数据,zk数据</span><br><span class="line">sudo kill -9 `ps -ef|grep /opt/kafka|grep -v grep|awk &#x27;&#123;print $2&#125;&#x27;` &amp;&amp; sudo chmod -R 777 /opt/ &amp;&amp; sudo rm -rf /opt/zookeeper/data/version*/* &amp;&amp; sudo rm -rf /opt/kafka/logs/*</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-flink相关指令"><a href="#5-flink相关指令" class="headerlink" title="5,flink相关指令"></a>5,flink相关指令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#统计Flink任务个数</span><br><span class="line">/opt/flink/bin/flink list -m 172.4.8.10:31081|grep RUNNING |wc -l</span><br><span class="line"></span><br><span class="line">#通过命名行发布fink任务</span><br><span class="line">/opt/flink/bin/flink run -m 172.4.3.10:31081 -d  -s s3p://flink-storage/flink-checkpoints/f860fa4c80791e6aa7b81def598d7f2f/chk-4384 -c com.flink..job.kafka.to.Job   /home/www/lib/flink-job.jar  --username nacos --password nacos --namespace flink --serverAddr http://172.4.3.70:3000  --group DEFAULT_GROUP --dataId flink-demo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="99-常见综合指令"><a href="#99-常见综合指令" class="headerlink" title="99,常见综合指令"></a>99,常见综合指令</h2><h3 id="批量合并git分支代码"><a href="#批量合并git分支代码" class="headerlink" title="批量合并git分支代码"></a>批量合并git分支代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">home=&quot;/mnt/d/git&quot;</span><br><span class="line">host=&quot;gitlab.com&quot;</span><br><span class="line">module=&quot;demo&quot;</span><br><span class="line">service_array=( &quot;demo-starter&quot; &quot;gatewar-service&quot; &quot;file-service&quot; &quot;message-service&quot; &quot;identity-service&quot; &quot;authenticate-service&quot; &quot;system-service&quot; &quot;content-service&quot; &quot;recruit-service&quot; &quot;callback-service&quot; &quot;task-service&quot; &quot;seo-service&quot; &quot;front-sso&quot; &quot;front-admin&quot; &quot;front-organization&quot; &quot;front-mobile&quot;)</span><br><span class="line">length=$&#123;#service_array[*]&#125;</span><br><span class="line">dev=&quot;dev&quot;</span><br><span class="line">sit=&quot;sit&quot;</span><br><span class="line"></span><br><span class="line">for(( i=0;i&lt;length;i++)) do</span><br><span class="line">	cd $home</span><br><span class="line">	declare service=$&#123;service_array[i]&#125;</span><br><span class="line">	echo &quot;开始拉取 $service $dev 分支&quot; </span><br><span class="line">	git clone -b dev http://$host/$module/$service.git</span><br><span class="line">	echo &quot;拉取 完成&quot;</span><br><span class="line">	echo &quot;开始合并开发 $dev 分支到 $sit 分支&quot;</span><br><span class="line">	cd $home/$service   </span><br><span class="line">	echo &quot;当前目录 `pwd` &quot;</span><br><span class="line">	git merge origin/sit &amp;&amp; git branch sit &amp;&amp;   git push origin sit </span><br><span class="line">	echo &quot;合并 $service 完成&quot;	  </span><br><span class="line">done;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过shell批量停止flink任务"><a href="#通过shell批量停止flink任务" class="headerlink" title="通过shell批量停止flink任务"></a>通过shell批量停止flink任务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">strM=&quot;SLF4J&quot;</span><br><span class="line">for jobid in `/opt/flink/bin/flink list -m 172.24.3.70:31081|grep Job |awk &#x27;&#123;print $4 &#125;&#x27;`;do</span><br><span class="line">        result=$(echo $jobid | grep &quot;$&#123;strM&#125;&quot;)</span><br><span class="line">        if [[ &quot;$result&quot; == &quot;&quot; ]]</span><br><span class="line">                then</span><br><span class="line">                echo &quot; start stop $jobid *******************&quot;</span><br><span class="line">                /home/www/flink/bin/flink stop $jobid -m 172.24.3.70:31081</span><br><span class="line">                echo &quot; success stop $jobid success ********************&quot;</span><br><span class="line">        fi</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/05/24/common-command-reference/" data-id="cli1l3urg0000w01mep4lb4p6" data-title="common-command-reference" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/05/20/how-to-read-source-code/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redis 源码阅读</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IELTS/">IELTS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/24/common-command-reference/">common-command-reference</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/20/how-to-read-source-code/">Redis 源码阅读</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/20/writing/">雅思写作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
