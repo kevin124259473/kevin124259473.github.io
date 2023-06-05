@@ -14,7 +14,7 @@
 <meta property="og:description" content="常见指令参考1,k8s类别12345678910111213141516171819202122232425kubectl delete cm  &#96;kubectl get cm -n flink-k8s |grep cluster|grep -v grep|awk &amp;#x27;&amp;#123;print $1&amp;#125;&amp;#x27;&#96; -n flink-k8s &amp;&amp;  #批量rollo">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-05-24T10:44:40.000Z">
-<meta property="article:modified_time" content="2023-06-02T06:38:27.724Z">
+<meta property="article:modified_time" content="2023-06-05T03:07:18.343Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -138,6 +138,10 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM harbor.com/library/ubutu-jdk8:1.1.0</span><br><span class="line">WORKDIR /opt/</span><br><span class="line">ENV SERVICE_VERSION=&quot;1.0.0&quot; </span><br><span class="line">ENV SERVICE_NAME=&#x27;recruit-service&#x27; </span><br><span class="line">ENV JAVA_OPTS=&#x27;-server -Xms2048m -Xmx2048m  -Xss1024k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dfile.encoding=utf-8&#x27;</span><br><span class="line">COPY ./recruit-core/target/$&#123;SERVICE_NAME&#125;-$&#123;SERVICE_VERSION&#125;.jar /opt/</span><br><span class="line"># 启动jar</span><br><span class="line">CMD java  $&#123;JAVA_OPTS&#125; -jar /opt/$&#123;SERVICE_NAME&#125;-$&#123;SERVICE_VERSION&#125;.jar</span><br></pre></td></tr></table></figure>
 
 
+
+<h3 id="flink1-16-打包dockerfile"><a href="#flink1-16-打包dockerfile" class="headerlink" title="flink1.16 打包dockerfile"></a>flink1.16 打包dockerfile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FROM flink:1.16.2-scala_2.12-java8</span><br><span class="line"></span><br><span class="line">RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">RUN echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone</span><br><span class="line"></span><br><span class="line">RUN sed -i &#x27;s/^jdk.tls.disabledAlgorithms=.*/jdk.tls.disabledAlgorithms=RC4, DES, MD5withRSA, \\/&#x27; /opt/java/openjdk/lib/security/java.security</span><br><span class="line">RUN sed -ri -e &#x27;s/(MinProtocol\s*=\s*)TLSv1\.2/\1None/&#x27; /etc/ssl/openssl.cnf \</span><br><span class="line">    &amp;&amp; sed -ri -e &#x27;s/(CipherString\s*=\s*DEFAULT)@SECLEVEL=2/\1/&#x27; /etc/ssl/openssl.cnf</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">WORKDIR /opt/flink</span><br><span class="line">RUN ls -l </span><br><span class="line">RUN mkdir ./plugins/s3-fs-presto &amp;&amp; chown flink:flink -R ./plugins/s3-fs-presto &amp;&amp; cp ./opt/flink-s3-fs-presto-1.16.2.jar ./plugins/s3-fs-presto/ </span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     <footer class="article-footer">
@@ -195,7 +199,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
     </div>
   </div>
 
@@ -208,6 +212,14 @@
       <ul>
         
           <li>
+            <a href="/2023/06/04/develop-mode/">develop-mode</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/02/%E9%9B%B6%E4%BF%A1%E4%BB%BB%E6%90%AD%E5%BB%BA/">零信任搭建</a>
+          </li>
+        
+          <li>
             <a href="/2023/05/28/how-to-learn-ansible/">how-to-learn-ansible</a>
           </li>
         
@@ -217,14 +229,6 @@
         
           <li>
             <a href="/2023/05/28/how-to-achieve-techigical-platform/">如何搭建技术中台</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/27/manage-techigical/">如何进行技术管理</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/27/code-format/">架构设计-代码规范</a>
           </li>
         
       </ul>
