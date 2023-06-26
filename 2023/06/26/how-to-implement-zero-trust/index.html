@@ -4,15 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>零信任搭建 | Hexo</title>
+  <title>how to implement zero trust | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="零信任搭建">
-<meta property="og:url" content="http://example.com/2023/06/02/%E9%9B%B6%E4%BF%A1%E4%BB%BB%E6%90%AD%E5%BB%BA/index.html">
+  <meta name="description" content="123456789101112OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。如果你想使用 Open">
+<meta property="og:type" content="article">
+<meta property="og:title" content="how to implement zero trust">
+<meta property="og:url" content="http://example.com/2023/06/26/how-to-implement-zero-trust/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="123456789101112OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。如果你想使用 Open">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-06-02T06:56:29.000Z">
-<meta property="article:modified_time" content="2023-06-02T06:56:29.722Z">
+<meta property="article:published_time" content="2023-06-26T05:59:15.000Z">
+<meta property="article:modified_time" content="2023-06-26T06:00:26.450Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +75,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-零信任搭建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-how-to-implement-zero-trust" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/06/02/%E9%9B%B6%E4%BF%A1%E4%BB%BB%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time class="dt-published" datetime="2023-06-02T06:56:29.000Z" itemprop="datePublished">2023-06-02</time>
+    <a href="/2023/06/26/how-to-implement-zero-trust/" class="article-date">
+  <time class="dt-published" datetime="2023-06-26T05:59:15.000Z" itemprop="datePublished">2023-06-26</time>
 </a>
     
   </div>
@@ -87,7 +89,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      零信任搭建
+      how to implement zero trust
     </h1>
   
 
@@ -95,11 +97,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。</span><br><span class="line"></span><br><span class="line">如果你想使用 OpenZiti CLI 来生成 PKI，你可以按照以下步骤操作：</span><br><span class="line"></span><br><span class="line">- 安装 OpenZiti CLI 工具，你可以从 GitHub 上下载它。</span><br><span class="line">- 运行 `ziti pki create ca` 命令来创建一个根证书颁发机构（CA）²。你需要提供一些信息，比如 CA 的名称、有效期、密钥长度等。这个命令会在当前目录下生成一个名为 `root-ca` 的文件夹，里面包含了 CA 的密钥和证书文件²。</span><br><span class="line">- 运行 `ziti pki create ca -p root-ca` 命令来创建一个中间 CA²。这个命令会在当前目录下生成一个名为 `intermediate-ca` 的文件夹，里面包含了中间 CA 的密钥和证书文件，以及一个由根 CA 签名的证书请求文件（CSR）²。</span><br><span class="line">- 运行 `ziti pki sign csr intermediate-ca/csr.json -c root-ca` 命令来用根 CA 签署中间 CA 的 CSR²。这个命令会在 `intermediate-ca` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由根 CA 签署的中间 CA 的证书文件²。</span><br><span class="line">- 运行 `ziti pki create server -p intermediate-ca -n controller` 命令来创建一个用于 Ziti 控制器的服务器证书²。这个命令会在当前目录下生成一个名为 `controller` 的文件夹，里面包含了服务器证书的密钥和证书文件，以及一个由中间 CA 签名的 CSR²。</span><br><span class="line">- 运行 `ziti pki sign csr controller/csr.json -c intermediate-ca` 命令来用中间 CA 签署服务器证书的 CSR²。这个命令会在 `controller` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由中间 CA 签署的服务器证书文件²。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/02/%E9%9B%B6%E4%BF%A1%E4%BB%BB%E6%90%AD%E5%BB%BA/" data-id="clii9vmkm0000yc1mfvtudmai" data-title="零信任搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/06/26/how-to-implement-zero-trust/" data-id="cljcgpqcg0000bn1mbfjagf7u" data-title="how to implement zero trust" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -109,19 +113,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/06/04/develop-mode/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          设计模式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2023/05/28/how-to-learn-ansible/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/06/13/news/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">how-to-learn-ansible</div>
+      <div class="article-nav-title">news</div>
     </a>
   
 </nav>
