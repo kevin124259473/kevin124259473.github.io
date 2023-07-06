@@ -95,8 +95,47 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。</span><br><span class="line"></span><br><span class="line">如果你想使用 OpenZiti CLI 来生成 PKI，你可以按照以下步骤操作：</span><br><span class="line"></span><br><span class="line">- 安装 OpenZiti CLI 工具，你可以从 GitHub 上下载它。</span><br><span class="line">- 运行 `ziti pki create ca` 命令来创建一个根证书颁发机构（CA）²。你需要提供一些信息，比如 CA 的名称、有效期、密钥长度等。这个命令会在当前目录下生成一个名为 `root-ca` 的文件夹，里面包含了 CA 的密钥和证书文件²。</span><br><span class="line">- 运行 `ziti pki create ca -p root-ca` 命令来创建一个中间 CA²。这个命令会在当前目录下生成一个名为 `intermediate-ca` 的文件夹，里面包含了中间 CA 的密钥和证书文件，以及一个由根 CA 签名的证书请求文件（CSR）²。</span><br><span class="line">- 运行 `ziti pki sign csr intermediate-ca/csr.json -c root-ca` 命令来用根 CA 签署中间 CA 的 CSR²。这个命令会在 `intermediate-ca` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由根 CA 签署的中间 CA 的证书文件²。</span><br><span class="line">- 运行 `ziti pki create server -p intermediate-ca -n controller` 命令来创建一个用于 Ziti 控制器的服务器证书²。这个命令会在当前目录下生成一个名为 `controller` 的文件夹，里面包含了服务器证书的密钥和证书文件，以及一个由中间 CA 签名的 CSR²。</span><br><span class="line">- 运行 `ziti pki sign csr controller/csr.json -c intermediate-ca` 命令来用中间 CA 签署服务器证书的 CSR²。这个命令会在 `controller` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由中间 CA 签署的服务器证书文件²。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h1 id="一-What-is-OpenZiti"><a href="#一-What-is-OpenZiti" class="headerlink" title="一, What is OpenZiti?"></a>一, What is OpenZiti?</h1><h2 id="1-流量流转图"><a href="#1-流量流转图" class="headerlink" title="1,流量流转图"></a>1,流量流转图</h2><p><img src="/2023/06/26/how-to-implement-zero-trust/1.png"></p>
+<p>解释如下:</p>
+<ul>
+<li>A zero trust overlay mesh network composed of a controller, edge routers and fabric routers</li>
+<li>Numerous SDKs making it easy to embed zero trust principles directly into your application</li>
+<li>Tunneling applications providing zero trust access to those applications you cannot embed zero trust into directly</li>
+<li>Zero trust principles such as authorize before connect, continual authorization, least-privilege access</li>
+</ul>
+<h2 id="2-物理组件"><a href="#2-物理组件" class="headerlink" title="2,物理组件"></a>2,物理组件</h2><p>主要由三部分构成,Controller  ,Router  和 Edge Clients  </p>
+<p>下面详细介绍</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>核心功能</p>
+<ul>
+<li>configuring OpenZiti services as well as being the central point for managing the identities used by users, devices and the nodes making up the OpenZiti Network</li>
+<li>authentication and authorization for every connection in the OpenZiti Network</li>
+<li>configured PKI is used to create secure, mutually- authenticated TLS (mTLS) network connections between any two pieces of the OpenZiti Network</li>
+<li>Ziti Controller uses a local database based on <a target="_blank" rel="noopener" href="https://github.com/etcd-io/bbolt">bbolt</a> to store the information needed to manage the network</li>
+</ul>
+<h3 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h3><p>核心功能</p>
+<ul>
+<li>securely and reliably delivering traffic from one OpenZiti Network node to the destination</li>
+<li>Routers are linked together to form a mesh network</li>
+<li>the entry point to the OpenZiti Network for client connections, and in combination with the Ziti Controller is responsible for authenticating and authorizing OpenZiti Edge Clients.</li>
+</ul>
+<h3 id="Edge-Clients"><a href="#Edge-Clients" class="headerlink" title="Edge Clients"></a>Edge Clients</h3><h2 id="3-逻辑组件"><a href="#3-逻辑组件" class="headerlink" title="3,逻辑组件"></a>3,逻辑组件</h2><h3 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h3><h3 id="Identities"><a href="#Identities" class="headerlink" title="Identities"></a>Identities</h3><h3 id="Policies"><a href="#Policies" class="headerlink" title="Policies"></a>Policies</h3><h1 id="二-实战"><a href="#二-实战" class="headerlink" title="二,实战"></a>二,实战</h1><h3 id="1-Controller"><a href="#1-Controller" class="headerlink" title="1,Controller"></a>1,Controller</h3><p>&lt;1&gt;,生成密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。</span><br><span class="line"></span><br><span class="line">如果你想使用 OpenZiti CLI 来生成 PKI，你可以按照以下步骤操作：</span><br><span class="line"></span><br><span class="line">- 安装 OpenZiti CLI 工具，你可以从 GitHub 上下载它。</span><br><span class="line">- 运行 `ziti pki create ca` 命令来创建一个根证书颁发机构（CA）²。你需要提供一些信息，比如 CA 的名称、有效期、密钥长度等。这个命令会在当前目录下生成一个名为 `root-ca` 的文件夹，里面包含了 CA 的密钥和证书文件²。</span><br><span class="line">- 运行 `ziti pki create ca -p root-ca` 命令来创建一个中间 CA²。这个命令会在当前目录下生成一个名为 `intermediate-ca` 的文件夹，里面包含了中间 CA 的密钥和证书文件，以及一个由根 CA 签名的证书请求文件（CSR）²。</span><br><span class="line">- 运行 `ziti pki sign csr intermediate-ca/csr.json -c root-ca` 命令来用根 CA 签署中间 CA 的 CSR²。这个命令会在 `intermediate-ca` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由根 CA 签署的中间 CA 的证书文件²。</span><br><span class="line">- 运行 `ziti pki create server -p intermediate-ca -n controller` 命令来创建一个用于 Ziti 控制器的服务器证书²。这个命令会在当前目录下生成一个名为 `controller` 的文件夹，里面包含了服务器证书的密钥和证书文件，以及一个由中间 CA 签名的 CSR²。</span><br><span class="line">- 运行 `ziti pki sign csr controller/csr.json -c intermediate-ca` 命令来用中间 CA 签署服务器证书的 CSR²。这个命令会在 `controller` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由中间 CA 签署的服务器证书文件²。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ziti pki create ca --pki-root .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p>&lt;2&gt;,生成配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ziti create config controller</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&lt;3&gt;,启动指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ziti-router run ./router.yml --log-formatter pfxlog</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="9-Public-Key-Infrastructure"><a href="#9-Public-Key-Infrastructure" class="headerlink" title="9,Public Key Infrastructure"></a>9,Public Key Infrastructure</h3><h1 id="99-参考文档"><a href="#99-参考文档" class="headerlink" title="99,参考文档"></a>99,参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.openziti.io/docs/learn/introduction/#openziti-controller">https://docs.openziti.io/docs/learn/introduction/#openziti-controller</a></p>
 
       
     </div>
@@ -175,6 +214,8 @@
 <p><img src="/2023/06/13/news/scamper.png"></p>
 <p>参考文章</p>
 <p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1666571149028091859&wfr=spider&for=pc">https://baijiahao.baidu.com/s?id=1666571149028091859&amp;wfr=spider&amp;for=pc</a></p>
+<h2 id="大学如何选专业"><a href="#大学如何选专业" class="headerlink" title="大学如何选专业"></a>大学如何选专业</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1,路走宽,不能走窄</span><br><span class="line">2,以终为始,即你未来要做什么,做现在的选择</span><br><span class="line"></span><br><span class="line">选专业小建议</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">1、生化环材天坑不能碰，哪怕是名校</span><br><span class="line">2、金融不能碰，除非家里是搞金融的</span><br><span class="line">3、管理类不要碰，除非家里有企业需要管理</span><br><span class="line">4、想考公优先选汉语言文学和思政，不要选英语</span><br><span class="line">5,想在哪儿当医生就读哪儿的医学院</span><br><span class="line">6、文科优先选学校，理工科优先选专业</span><br><span class="line">7、本省大学少的考生很吃亏，因为外省在你省招生的专业不多，好专业更少</span><br><span class="line">8、数学和计算机专业都很好</span><br><span class="line">9、工科比理科挣钱</span><br><span class="line">10、产业发达的省份家长更看重专业，因为家长更容易接触相关产业，知道前景如何</span><br><span class="line">11、服从调剂一定要慎重，很有可能把你调剂到一个你完全不接受的专业</span><br><span class="line">12、立志考研的考生一定要学好英语</span><br><span class="line"></span><br><span class="line">选专业经典八连问</span><br><span class="line">-----------------------------------------------</span><br><span class="line">1.学医吗&gt;学-&gt;临床医学</span><br><span class="line">	不学</span><br><span class="line">2.学农吗-&gt; 学-&gt;农业类</span><br><span class="line">	1不学</span><br><span class="line">3.当老师吗 -》学-&gt;师范类</span><br><span class="line">	1不学</span><br><span class="line">4.学文理兼招吗-学-&gt;法学财会汉语言</span><br><span class="line">	1不学</span><br><span class="line">5.带化学吗-》带-&gt;生化环材 (要读博)</span><br><span class="line">	不学</span><br><span class="line">6.带物理吗-》不带-&gt;数学、统计、计算机</span><br><span class="line">	带</span><br><span class="line">7.力学好-&gt;土木、水利、机械、航空航天</span><br><span class="line">8.电学好-&gt;电气、自动化、电子信息、生物医学工程、</span><br><span class="line">仪器科学与工程</span><br><span class="line">(电与力)交又学科</span><br><span class="line">	0交通工程四个方向(道路与铁道工程、交通运载工具机u)、交通轨道信号控制(值动化)交通运输规划和管理《筹</span><br><span class="line">学</span><br><span class="line">	@能源与动力四个方向(新能源、发电、制冷、发动机)</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
