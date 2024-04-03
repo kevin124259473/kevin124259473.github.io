@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>设计模式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一,设计模式概述1,整体描述 2,设计模式定义12软件设计中常见问题的典型解决方案。 它们就像能根据需求进行调整的预制蓝图， 可用于解决代码中反复出现的设计问题  3,设计模式的优缺点1234设计模式是针对软件设计中常见问题的工具箱， 其中的工具就是各种经过实践验证的解决方案。 即使你从未遇到过这些问题， 了解模式仍然非常有用， 因为它能指导你如何使用面向对象的设计原则来解决各种问题。设计模式定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://example.com/2023/06/04/develop-mode/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一,设计模式概述1,整体描述 2,设计模式定义12软件设计中常见问题的典型解决方案。 它们就像能根据需求进行调整的预制蓝图， 可用于解决代码中反复出现的设计问题  3,设计模式的优缺点1234设计模式是针对软件设计中常见问题的工具箱， 其中的工具就是各种经过实践验证的解决方案。 即使你从未遇到过这些问题， 了解模式仍然非常有用， 因为它能指导你如何使用面向对象的设计原则来解决各种问题。设计模式定义">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/2-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/5-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/6-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/7-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/8-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/2023/06/04/develop-mode/9-%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="article:published_time" content="2023-06-04T08:34:30.000Z">
+<meta property="article:modified_time" content="2024-04-03T03:30:41.836Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/04/develop-mode/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-develop-mode" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/04/develop-mode/" class="article-date">
+  <time class="dt-published" datetime="2023-06-04T08:34:30.000Z" itemprop="datePublished">2023-06-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      设计模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="一-设计模式概述"><a href="#一-设计模式概述" class="headerlink" title="一,设计模式概述"></a>一,设计模式概述</h1><h2 id="1-整体描述"><a href="#1-整体描述" class="headerlink" title="1,整体描述"></a>1,整体描述</h2><p><img src="/2023/06/04/develop-mode/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png"></p>
+<h2 id="2-设计模式定义"><a href="#2-设计模式定义" class="headerlink" title="2,设计模式定义"></a>2,设计模式定义</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">软件设计中常见问题的典型解决方案。 它们就像能根据需求进行调整的预制蓝图， </span><br><span class="line">可用于解决代码中反复出现的设计问题</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-设计模式的优缺点"><a href="#3-设计模式的优缺点" class="headerlink" title="3,设计模式的优缺点"></a>3,设计模式的优缺点</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">设计模式是针对软件设计中常见问题的工具箱， 其中的工具就是各种经过实践验证的解决方案。 即使你从未遇到过这些问题， 了解模式仍然非常有用， 因为它能指导你如何使用面向对象的设计原则来解决各种问题。</span><br><span class="line"></span><br><span class="line">设计模式定义了一种让你和团队成员能够更高效沟通的通用语言。 你只需说 “哦， 这里用单例就可以了”， 所有人都会理解这条建议背后的想法。 只要知晓模式及其名称， 你就无需解释什么是单例</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="二-设计模式的用例"><a href="#二-设计模式的用例" class="headerlink" title="二,设计模式的用例"></a>二,设计模式的用例</h1><h2 id="1-创建型"><a href="#1-创建型" class="headerlink" title="1,创建型"></a>1,创建型</h2><h3 id="lt-1-gt-简单工厂模式"><a href="#lt-1-gt-简单工厂模式" class="headerlink" title="&lt;1&gt;,简单工厂模式"></a>&lt;1&gt;,简单工厂模式</h3><p><img src="/2023/06/04/develop-mode/1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-2-gt-原型模式"><a href="#lt-2-gt-原型模式" class="headerlink" title="&lt;2&gt;,原型模式"></a>&lt;2&gt;,原型模式</h3><p><img src="/2023/06/04/develop-mode/2-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-3-gt-抽象工厂模式"><a href="#lt-3-gt-抽象工厂模式" class="headerlink" title="&lt;3&gt;,抽象工厂模式"></a>&lt;3&gt;,抽象工厂模式</h3><p><img src="/2023/06/04/develop-mode/3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-4-gt-生成器模式"><a href="#lt-4-gt-生成器模式" class="headerlink" title="&lt;4&gt;,生成器模式"></a>&lt;4&gt;,生成器模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">生成器模式比较简单,@Builder可以实现</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-5-gt-单例模式"><a href="#lt-5-gt-单例模式" class="headerlink" title="&lt;5&gt;,单例模式"></a>&lt;5&gt;,单例模式</h3><p><img src="/2023/06/04/develop-mode/5-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png"></p>
+<h2 id="2-行为型"><a href="#2-行为型" class="headerlink" title="2,行为型"></a>2,行为型</h2><p>&lt;13&gt;,责任链模式</p>
+<h2 id="3-结构型"><a href="#3-结构型" class="headerlink" title="3,结构型"></a>3,结构型</h2><h3 id="lt-6-gt-适配器模式"><a href="#lt-6-gt-适配器模式" class="headerlink" title="&lt;6&gt;,适配器模式"></a>&lt;6&gt;,适配器模式</h3><p><img src="/2023/06/04/develop-mode/6-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-7-gt-桥接模式"><a href="#lt-7-gt-桥接模式" class="headerlink" title="&lt;7&gt;,桥接模式"></a>&lt;7&gt;,桥接模式</h3><p><img src="/2023/06/04/develop-mode/7-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-8-gt-组合模式"><a href="#lt-8-gt-组合模式" class="headerlink" title="&lt;8&gt;,组合模式"></a>&lt;8&gt;,组合模式</h3><p><img src="/2023/06/04/develop-mode/8-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-9-gt-装饰者模式"><a href="#lt-9-gt-装饰者模式" class="headerlink" title="&lt;9&gt;,装饰者模式"></a>&lt;9&gt;,装饰者模式</h3><p><img src="/2023/06/04/develop-mode/9-%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="lt-10-gt-外观模式"><a href="#lt-10-gt-外观模式" class="headerlink" title="&lt;10&gt;,外观模式"></a>&lt;10&gt;,外观模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我们常用的rpc接口框架,比如dubbo,feign提供的接口,都是facade模式</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-11-gt-享元模式"><a href="#lt-11-gt-享元模式" class="headerlink" title="&lt;11&gt;,享元模式"></a>&lt;11&gt;,享元模式</h3><h3 id="lt-12-gt-代理模式"><a href="#lt-12-gt-代理模式" class="headerlink" title="&lt;12&gt;,代理模式"></a>&lt;12&gt;,代理模式</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/04/develop-mode/" data-id="cluj9jc9w000b3j1m0b9w4rhe" data-title="设计模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/06/13/news/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          news
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/02/%E9%9B%B6%E4%BF%A1%E4%BB%BB%E6%90%AD%E5%BB%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">零信任搭建</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IELTS/">IELTS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/articture/">articture</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/03/shell-study/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/03/shell-learn/">shell脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/26/how-to-implement-zero-trust/">how to implement zero trust</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/13/news/">news</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/04/develop-mode/">设计模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>how to implement zero trust | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一, What is OpenZiti?1,流量流转图 解释如下:  A zero trust overlay mesh network composed of a controller, edge routers and fabric routers Numerous SDKs making it easy to embed zero trust principles directly into">
+<meta property="og:type" content="article">
+<meta property="og:title" content="how to implement zero trust">
+<meta property="og:url" content="http://example.com/2023/06/26/how-to-implement-zero-trust/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一, What is OpenZiti?1,流量流转图 解释如下:  A zero trust overlay mesh network composed of a controller, edge routers and fabric routers Numerous SDKs making it easy to embed zero trust principles directly into">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/06/26/how-to-implement-zero-trust/1.png">
+<meta property="article:published_time" content="2023-06-26T05:59:15.000Z">
+<meta property="article:modified_time" content="2024-04-03T03:30:41.866Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/26/how-to-implement-zero-trust/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-how-to-implement-zero-trust" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/26/how-to-implement-zero-trust/" class="article-date">
+  <time class="dt-published" datetime="2023-06-26T05:59:15.000Z" itemprop="datePublished">2023-06-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      how to implement zero trust
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="一-What-is-OpenZiti"><a href="#一-What-is-OpenZiti" class="headerlink" title="一, What is OpenZiti?"></a>一, What is OpenZiti?</h1><h2 id="1-流量流转图"><a href="#1-流量流转图" class="headerlink" title="1,流量流转图"></a>1,流量流转图</h2><p><img src="/2023/06/26/how-to-implement-zero-trust/1.png"></p>
+<p>解释如下:</p>
+<ul>
+<li>A zero trust overlay mesh network composed of a controller, edge routers and fabric routers</li>
+<li>Numerous SDKs making it easy to embed zero trust principles directly into your application</li>
+<li>Tunneling applications providing zero trust access to those applications you cannot embed zero trust into directly</li>
+<li>Zero trust principles such as authorize before connect, continual authorization, least-privilege access</li>
+</ul>
+<h2 id="2-物理组件"><a href="#2-物理组件" class="headerlink" title="2,物理组件"></a>2,物理组件</h2><p>主要由三部分构成,Controller  ,Router  和 Edge Clients  </p>
+<p>下面详细介绍</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>核心功能</p>
+<ul>
+<li>configuring OpenZiti services as well as being the central point for managing the identities used by users, devices and the nodes making up the OpenZiti Network</li>
+<li>authentication and authorization for every connection in the OpenZiti Network</li>
+<li>configured PKI is used to create secure, mutually- authenticated TLS (mTLS) network connections between any two pieces of the OpenZiti Network</li>
+<li>Ziti Controller uses a local database based on <a target="_blank" rel="noopener" href="https://github.com/etcd-io/bbolt">bbolt</a> to store the information needed to manage the network</li>
+</ul>
+<h3 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h3><p>核心功能</p>
+<ul>
+<li>securely and reliably delivering traffic from one OpenZiti Network node to the destination</li>
+<li>Routers are linked together to form a mesh network</li>
+<li>the entry point to the OpenZiti Network for client connections, and in combination with the Ziti Controller is responsible for authenticating and authorizing OpenZiti Edge Clients.</li>
+</ul>
+<h3 id="Edge-Clients"><a href="#Edge-Clients" class="headerlink" title="Edge Clients"></a>Edge Clients</h3><h2 id="3-逻辑组件"><a href="#3-逻辑组件" class="headerlink" title="3,逻辑组件"></a>3,逻辑组件</h2><h3 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h3><h3 id="Identities"><a href="#Identities" class="headerlink" title="Identities"></a>Identities</h3><h3 id="Policies"><a href="#Policies" class="headerlink" title="Policies"></a>Policies</h3><h1 id="二-实战"><a href="#二-实战" class="headerlink" title="二,实战"></a>二,实战</h1><h3 id="1-Controller"><a href="#1-Controller" class="headerlink" title="1,Controller"></a>1,Controller</h3><p>&lt;1&gt;,生成密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">OpenZiti 如何创建 PKI 取决于你是使用 OpenZiti 提供的 PKI 还是使用第三方的 PKI¹。如果你使用 OpenZiti 提供的 PKI，你可以使用 OpenZiti CLI 来生成 PKI¹²。如果你使用第三方的 PKI，你需要在 OpenZiti 控制器中配置第三方的公钥证书¹³，并且自己负责获取和分发正确签名的证书¹。</span><br><span class="line"></span><br><span class="line">如果你想使用 OpenZiti CLI 来生成 PKI，你可以按照以下步骤操作：</span><br><span class="line"></span><br><span class="line">- 安装 OpenZiti CLI 工具，你可以从 GitHub 上下载它。</span><br><span class="line">- 运行 `ziti pki create ca` 命令来创建一个根证书颁发机构（CA）²。你需要提供一些信息，比如 CA 的名称、有效期、密钥长度等。这个命令会在当前目录下生成一个名为 `root-ca` 的文件夹，里面包含了 CA 的密钥和证书文件²。</span><br><span class="line">- 运行 `ziti pki create ca -p root-ca` 命令来创建一个中间 CA²。这个命令会在当前目录下生成一个名为 `intermediate-ca` 的文件夹，里面包含了中间 CA 的密钥和证书文件，以及一个由根 CA 签名的证书请求文件（CSR）²。</span><br><span class="line">- 运行 `ziti pki sign csr intermediate-ca/csr.json -c root-ca` 命令来用根 CA 签署中间 CA 的 CSR²。这个命令会在 `intermediate-ca` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由根 CA 签署的中间 CA 的证书文件²。</span><br><span class="line">- 运行 `ziti pki create server -p intermediate-ca -n controller` 命令来创建一个用于 Ziti 控制器的服务器证书²。这个命令会在当前目录下生成一个名为 `controller` 的文件夹，里面包含了服务器证书的密钥和证书文件，以及一个由中间 CA 签名的 CSR²。</span><br><span class="line">- 运行 `ziti pki sign csr controller/csr.json -c intermediate-ca` 命令来用中间 CA 签署服务器证书的 CSR²。这个命令会在 `controller` 文件夹下生成一个名为 `cert` 的文件夹，里面包含了由中间 CA 签署的服务器证书文件²。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ziti pki create ca --pki-root .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>&lt;2&gt;,生成配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ziti create config controller</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&lt;3&gt;,启动指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ziti-router run ./router.yml --log-formatter pfxlog</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="9-Public-Key-Infrastructure"><a href="#9-Public-Key-Infrastructure" class="headerlink" title="9,Public Key Infrastructure"></a>9,Public Key Infrastructure</h3><h1 id="99-参考文档"><a href="#99-参考文档" class="headerlink" title="99,参考文档"></a>99,参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.openziti.io/docs/learn/introduction/#openziti-controller">https://docs.openziti.io/docs/learn/introduction/#openziti-controller</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/06/26/how-to-implement-zero-trust/" data-id="cluj9jc9z000j3j1mbqt22u99" data-title="how to implement zero trust" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/04/03/shell-learn/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          shell脚本
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/13/news/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">news</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IELTS/">IELTS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/articture/">articture</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/03/shell-study/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/03/shell-learn/">shell脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/26/how-to-implement-zero-trust/">how to implement zero trust</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/13/news/">news</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/04/develop-mode/">设计模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
